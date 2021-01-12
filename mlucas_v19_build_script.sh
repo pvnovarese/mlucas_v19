@@ -6,7 +6,7 @@ ARCH=$(uname -m)
 echo "DEBUG: arch detected: "${ARCH}
 
 echo "DEBUG: copy entrypoint"
-cp /mlucas_v19_entrypoint.sh /usr/local/bin//mlucas_v19_entrypoint.sh
+cp /mlucas_v19_entrypoint.sh /usr/local/bin/mlucas_v19_entrypoint.sh
 
 if [ ${ARCH} == "x86_64" ]; then
     echo "DEBUG: building "${ARCH}

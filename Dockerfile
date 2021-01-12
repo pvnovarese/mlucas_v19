@@ -2,7 +2,7 @@ ARG ARCH=
 FROM debian:stable-slim AS builder
 
 COPY mlucas_v19* /
-RUN apt update && apt-get install -y xz-utils 
+RUN apt update && apt-get install -y xz-utils gcc
 WORKDIR /
 RUN /mlucas_v19_build_script.sh
 
