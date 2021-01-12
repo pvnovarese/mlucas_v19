@@ -1,14 +1,10 @@
 ARG ARCH=
 FROM debian:stable-slim AS builder
 
-COPY mlucas_v19.txz /mlucas_v19.txz
-RUN apt update && apt-get install -y xz-utils gcc bash && tar xJf /mlucas_v19.txz && mkdir /mlucas_v19/obj
-WORKDIR /mlucas_v19/obj
-COPY build_script* ./
-# we'll run the build script based on uname -m (though I 
-# need to update this to just have one big script and pass 
-# the arch target as an argument
-RUN ./build_script_$(uname -m).sh
+COPY mlucas_v19* /
+RUN apt update && apt-get install -y xz-utils 
+WORKDIR /
+RUN /mlucas_v19_build_script.sh
 
 # final stage
 FROM debian:stable-slim
@@ -27,9 +23,9 @@ Usage: docker run pvnovarese/mlucas \
 default option is '-s m' which will run a single-threaded self-test and dump a mlucas.cfg \
 file in /tmp (so you may want to bind mount here)." 
 
-COPY --from=builder /mlucas_v19/obj/Mlucas /usr/local/bin/Mlucas
+COPY --from=builder /usr/local/bin/* /usr/local/bin/
 HEALTHCHECK NONE
 USER nobody
 WORKDIR /tmp
 CMD ["-s", "m"]
-ENTRYPOINT ["/usr/local/bin/Mlucas"]
+ENTRYPOINT ["/usr/local/bin/mlucas_v19_entrypoint.sh"]
