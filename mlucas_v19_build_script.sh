@@ -34,15 +34,17 @@ if [ ${ARCH} == "x86_64" ]; then
 
     #build avx512-skylake
     gcc -c -O3 -DUSE_AVX512 -march=skylake-avx512 -DUSE_THREADS ../src/*.c
-    gcc -o mlucas-avx512-skylake *.o -lm -lpthread -lrt
-    cp mlucas-avx512-skylake /usr/local/bin/mlucas-avx512-skylake
+    gcc -o mlucas-avx512 *.o -lm -lpthread -lrt
+    cp mlucas-avx512 /usr/local/bin/mlucas-avx512
     rm *.o
 
     #build avx512-knl
-    gcc -c -O3 -DUSE_AVX512 -march=knl -DUSE_THREADS ../src/*.c
-    gcc -o mlucas-avx512-knl *.o -lm -lpthread -lrt
-    cp mlucas-avx512-knl /usr/local/bin/mlucas-avx512-knl
-    rm *.o
+    #I've got this commented out since I don't have any access to
+    #intel phi hardware, but it ... should work?
+    #gcc -c -O3 -DUSE_AVX512 -march=knl -DUSE_THREADS ../src/*.c
+    #gcc -o mlucas-avx512-knl *.o -lm -lpthread -lrt
+    #cp mlucas-avx512-knl /usr/local/bin/mlucas-avx512-knl
+    #rm *.o
 
     cp /mlucas_v19/src/primenet.py /usr/local/bin/primenet.py
 else
