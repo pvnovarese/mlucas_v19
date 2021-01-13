@@ -40,21 +40,16 @@ fi
 
 if [ ${ARCH} == 'x86_64' ]; then
 
-    echo "intel x86_64 detected"
     if grep -q avx512 ${CPUINFO}; then
-        echo "avx512 found"
         MLUCAS_EXE=${MLUCAS_EXE_BASE}-avx512
     else
         if grep -q avx2 ${CPUINFO}; then
-            echo "avx2 found"
             MLUCAS_EXE=${MLUCAS_EXE_BASE}-avx2
         else
             if grep -q avx ${CPUINFO}; then
-                echo "avx found"
                 MLUCAS_EXE=${MLUCAS_EXE_BASE}-avx
             else
                 if grep -q sse2 ${CPUINFO}; then
-                    echo "sse2 found"
                     MLUCAS_EXE=${MLUCAS_EXE_BASE}-sse2
                 else
                     echo "FATAL: no extensions found"
@@ -65,12 +60,9 @@ if [ ${ARCH} == 'x86_64' ]; then
     fi
 else
     if [ ${ARCH} == 'aarch64' ]; then
-        echo "aarch64 detected"
         if grep -q asimd ${CPUINFO}; then
-            echo "asimd found"
             MLUCAS_EXE=${MLUCAS_EXE_BASE}-c2simd
         else
-            echo "no asimd found"
             MLUCAS_EXE=${MLUCAS_EXE_BASE}-nosimd
         fi
     else
@@ -81,8 +73,7 @@ fi
 
 
 # how to differentiate between skylake and phi/knights landing???
-
-
+# will need to find some phi hardware someday
 
 # execute appropriate mlucas with arguments
 ${MLUCAS_EXE} $@
