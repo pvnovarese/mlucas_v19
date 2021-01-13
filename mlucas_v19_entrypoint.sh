@@ -85,6 +85,5 @@ fi
 
 
 # execute appropriate mlucas with arguments
-echo "mlucas exe should be: " ${MLUCAS_EXE}
 ${MLUCAS_EXE} $@
 
