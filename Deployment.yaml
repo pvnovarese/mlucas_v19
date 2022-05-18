@@ -1,0 +1,27 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: mlucas
+  labels:
+    name: mlucas
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlucas
+  namespace: mlucas
+  labels:
+    app: mlucas
+spec:
+  selector:
+    matchLabels:
+      app: mlucas
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: mlucas
+    spec:
+      containers:
+      - name: mlucas
+        image: krisclarkdev/mlucas:latest
