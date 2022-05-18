@@ -11,3 +11,24 @@ the container is based on debian:stable-slim
 the entrypoint script will look at /proc/cpuinfo and run the appropriate binary depending on what extensions are available on the available CPUs (on intel it looks for various AVX versions or SSE, on aarch64 it looks for asimd)
 
 I recommend running the container with /tmp on your host (or some other directory that is writable by user "nobody" bind mounted to /tmp so you can easily save your mlucas.cfg file etc.
+
+# Building
+
+```
+# Clone the repo
+git clone https://github.com/pvnovarese/mlucas_v19.git
+cd mlucas_v19
+
+# Build for different platforms
+docker buildx create --name mybuilder
+docker buildx use mybuilder
+docker buildx inspect --bootstrap
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t username/mlucas:latest
+
+# Deploy
+cd ..
+kubectl create -f ./Deployment.yaml
+
+# Verify
+kubectl get pods -n mlucas
+```
